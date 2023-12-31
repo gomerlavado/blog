@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Distribución binomial </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/styles.css">
+    </head>
+    <body>
+        <section class="post">
+            <h2>Distribución binomial</h2>
+            <p> Una distribución binomial establece la probabilidad de que se produzca un suceso con dos resultados posibles y <code>n</code> pruebas idénticas e independientes. 
+                Digamos que se lanza una moneda 5 veces. Entonces: </p>
+            <pre><code>n <- 5 
+p <- 1/2
+q <- 1 - p </code></pre>
+            <p> Para calcular la probabilidad de cada resultado posible podemos crear una función que tomé los valores de <code>n</code>, <code>p</code> y <code>q</code>: </p>
+            <pre><code>prob <- function (p,r,n) {
+        comb <- factorial(n)/(factorial(r)*factorial(n-r))
+        p_r <- comb * p^r * (1-p)^(n-r)
+        return(p_r)
+        } </code></pre>
+
+            <p> Para determinar la distribución de probabilidad podemos crear una tabla con el resultado de cada lanzamiento: </p>
+            <pre><code>df <- data.frame(heads = seq(0,n,1), 
+        tails = n - seq(0,n,1), 
+        prob = mapply(prob, p,seq(0,n,1),n)
+        ) </code></pre>
+
+            <p> Para calcular la densidad de probabilidad podemos acumular las sumas del vector con los resultados: </p>
+            <pre><code>df[,"cum_prob"] <- cumsum(df$prob) </code></pre>
+
+            <p> Finalmente, una forma de visualizar los resultados es usando gráficos de barras: </p>
+            <pre><code>barplot(df$prob*32,
+        xlab = "Number of heads", ylab = "Probability x 32", 
+        col = c("royalblue"),
+        )
+
+barplot(df$cum_prob*32,
+        xlab = "Number of heads", ylab = "Probability x 32", 
+        col = c("royalblue"),
+        ) </code></pre>
+            <div class="pag">
+                <a href="../"> &#10094; Inicio </a>
+                <a class="right" href="2.html"> Fasores &#10095; </a>
+            </div>
+        </section>
+    </body>
+</html>

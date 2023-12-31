@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Series de tiempo </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/styles.css">
+    </head>
+    <body>
+        <section class="post">
+            <h2>Series de tiempo</h2>
+            <p> Una serie de tiempo puede ser definida como un conjunto de datos ordenados a lo largo del tiempo.
+                Esta serie de tiempo se puede dividir en una componente tendencial, una componente estacional y una componente aleatoria.
+            </p>
+            <pre><code>xts_monthly <- xts(df$Demand, df$Date)
+decompose(ts(xts_monthly, frequency = 12))</code></pre>
+            <p> El modelo ARIMA (p,d,q) es un modelo econométrico que permite predecir estos datos usando la autorregresión (AR), la media móvil (MA) y las diferencias finitas (I).
+                La autorregresión se refiere a la relación que tiene la serie de tiempo con observaciones pasadas.  
+            </p>
+            <pre><code>lag(xts_monthly, -1)</code></pre>
+            <p> La media móvil se refiere al promedio de un número de observaciones en determinados periodos.</p>
+            <pre><code>rollmean(xts_monthly, 2)</code></pre>
+            <p> Por otra lado, las diferencias finitas son introducidas para eliminar la estacionariedad de las observaciones.
+            </p>
+            <pre><code>diff(xts_monthly)</code></pre>
+            <p> Los parámetros <code>p</code>, <code>d</code> y <code>q</code> están relacionados con las técnicas descritas anteriormente.
+                Los valores de <code>p</code> y <code>q</code> pueden ser encontradas usando las funciones de autocorrelación y autocorrelación parcial. </p>
+            <pre><code>acf(xts_monthly, plot = FALSE, lag_max=12)
+pacf(xts_monthly, plot = FALSE, lag_max=12)</code></pre>
+
+            <p> Asimismo, se puede encontrar el valor de <code>d</code> usando un gráfico de diferencias finitas.
+                Finalmente, se pueden predecir los valores de los siguientes 10 meses de la serie de tiempo.
+            </p>
+            <pre><code>results_monthly <- arima(xts_monthly, order = c(1,1,1))
+forecast(results_monthly, 60)</code></pre>
+
+            <p> En la siguiente figura se muestra el resultado de la previsión de la máxima demanda mensual del Perú
+                usado el modelo ARIMA.
+            </p>
+            <img class="img-short" src="https://drive.google.com/uc?export=view&id=1j6aN5pqClsMFFS968rHAjA2dzYdw4E2U" alt="time-series-forecast">
+            <div class="pag">
+                <a href="2.html"> &#10094; Fasores </a>
+                <a class="right" href="4.html"> Distribución de Poisson &#10095; </a>
+            </div>
+        </section>
+    </body>
+</html>

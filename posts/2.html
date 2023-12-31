@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Fasores </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../styles/styles.css">
+    </head>
+    <body>
+        <section class="post">
+            <h2> Fasores </h2>
+            <p> Un fasor expresa la amplitud y el ángulo de fase de una función sinusoidal como un número complejo.
+                Digamos que el voltaje producido por un generador es regida por una función sinusoidal. 
+                Entonces: 
+            </p>
+            <pre><code>volt_time = volt_max * np.cos(omega * time + theta_volt)
+curr_time = curr_max * np.cos(omega * time + theta_curr)</code></pre>
+
+            <p>Para obtener una gráfica del voltaje, el voltaje efectivo, la corriente y la potencia se puede usar:</p>
+            <pre><code>plt.plot(time, volt_time, "r-", 
+            time, curr_time, "b-", 
+            time, volt_time*curr_time, "g-")
+plt.hlines(220, 0, 0.1, colors="r", linestyles="dashed")
+plt.show()</code></pre>
+
+            <p>Los fasores del voltaje, la corriente y la potencia puede ser modelados como:</p>
+
+            <pre><code>complex_volt = complex(volt_rms * math.cos(theta_volt), 
+                    volt_rms * math.sin(theta_volt))
+complex_curr = complex(curr_rms * math.cos(theta_curr), 
+                    curr_rms * math.sin(theta_curr))
+complex_power = complex_volt * complex_curr.conjugate()</code></pre>
+            <p>La parte real de la potencia compleja es la potencia promedio, la cual puede ser calculada como: </p>
+
+            <pre><code>phi = theta_volt - theta_curr
+power_avg = volt_rms * curr_rms * math.cos(phi)</code></pre>
+
+            <img class="img-short" src="https://drive.google.com/uc?export=view&id=1T5W8O1NqqRJNiQWwrLeHpIuB2yfr4OOi" alt="sinusoids">
+
+            <div class="pag">
+                <a href="1.html"> &#10094; Distribución binomial </a>
+                <a class="right" href="3.html"> Series de tiempo &#10095; </a>
+            </div>
+        </section>
+    </body>
+</html>
